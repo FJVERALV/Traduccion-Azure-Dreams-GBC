@@ -2,7 +2,7 @@
 
 Parche de traducción fan al español de **Azure Dreams** para Game Boy Color (versión USA), por **Fveralv**.
 
-**Web del proyecto:** https://fjveralv.github.io/Parche-traduccion-Azure-Dreams-GBC/
+**Web del proyecto:** [https://fjveralv.github.io/Parche-traduccion-Azure-Dreams-GBC/](https://fjveralv.github.io/Traduccion-Azure-Dreams-GBC/)
 
 ![Pantalla de título](img/captura1.png) ![Nacimiento de Kou](img/captura2.png)
 ![Diálogo con tildes](img/captura3.png) ![Diálogo completo](img/captura4.png)

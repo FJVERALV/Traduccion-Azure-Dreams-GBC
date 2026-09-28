@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Azure Dreams GBC — Traducción al español</title>
+<meta name="description" content="Parche de traducción al español de Azure Dreams para Game Boy Color (USA). Progreso, capturas y descarga.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#6fd6f2; --sky2:#b9ecf8; --sand:#f6d99a; --sand2:#e9b86a; --dune:#c98b45;
+    --frame:#7a3f1c; --frame2:#c96b2c; --paper:#fff8e6; --ink:#2b1a0e; --dim:#7d5a3c;
+    --hp1:#8be05a; --hp2:#2f9a3a; --gbc:#5b3fa8; --gbc2:#3e2a7a;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; color:var(--ink); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:
+      /* sol */
+      radial-gradient(circle 46px at 84% 90px,#fff6c8 60%,rgba(255,246,200,.35) 70%,transparent 72%),
+      /* torre a lo lejos */
+      linear-gradient(90deg,transparent calc(50% - 26px),rgba(160,120,90,.55) calc(50% - 26px),rgba(160,120,90,.55) calc(50% + 26px),transparent calc(50% + 26px)) 0 120px/100% 300px no-repeat,
+      /* dunas */
+      radial-gradient(ellipse 60% 120px at 20% 470px,var(--sand2) 60%,transparent 61%),
+      radial-gradient(ellipse 55% 110px at 85% 500px,var(--sand2) 60%,transparent 61%),
+      linear-gradient(180deg,var(--sky) 0,var(--sky2) 360px,var(--sand) 440px,var(--sand) 900px,var(--dune) 100%);
+  }
+  main{max-width:760px; margin:0 auto; padding:36px 18px 60px}
+
+  /* ---------- cabecera ---------- */
+header {
+  text-align: center; 
+  margin-bottom: 34px;
+}
+
+/* Estilos para la nueva imagen del logo centrada y al 60% */
+.logo-img {
+  display: inline-block;
+  margin: 0 auto;
+  
+  /* Escalado exacto al 60% de su resolución */
+  width: 60%;
+  max-width: 100%; /* Evita que se desborde en pantallas móviles pequeñas */
+  height: auto;    /* Mantiene la proporción original de la imagen sin deformarla */
+}
+
+header p {
+  margin: 16px auto 0; 
+  max-width: 560px; 
+  color: var(--ink); 
+  font-weight: 600; 
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .6);
+}
+
+  /* ---------- placa de nombre + cuadro de dialogo del juego ---------- */
+  h2{
+    display:inline-block; margin:34px 0 -4px 14px; padding:8px 14px 6px; position:relative; z-index:1;
+    font:700 17px/1.2 "Pixelify Sans",monospace; color:var(--paper); letter-spacing:1px;
+    background:var(--frame); border:3px solid var(--frame2); border-bottom:0;
+  }
+  .box{
+    position:relative; padding:22px 24px 26px; background:var(--paper);
+    border:4px solid var(--frame); box-shadow:0 0 0 3px var(--frame2) inset, 6px 6px 0 rgba(43,26,14,.3);
+  }
+  .box::before, .box::after{ content:""; position:absolute; width:10px; height:10px; background:var(--frame2); border:2px solid var(--frame) }
+  .box::before{ left:-8px; top:-8px }
+  .box::after { right:-8px; top:-8px }
+  .box .corner-b::before, .box .corner-b::after{ content:""; position:absolute; bottom:-8px; width:10px; height:10px; background:var(--frame2); border:2px solid var(--frame) }
+  .box .corner-b::before{ left:-8px } .box .corner-b::after{ right:-8px }
+  .next{ position:absolute; right:14px; bottom:8px; border:7px solid transparent; border-top:9px solid #d4572a; border-bottom:0; animation:blink 1s steps(2) infinite }
+  @keyframes blink{ 50%{opacity:0} }
+  .pix{font:700 18px/1.5 "Pixelify Sans",monospace; color:var(--frame)}
+  .dim{color:var(--dim); font-size:14px}
+
+  /* ---------- capturas en pantalla de GBC ---------- */
+  .shots{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px }
+  .gb{
+    margin:0; padding:14px 14px 10px; background:linear-gradient(160deg,var(--gbc),var(--gbc2)); border-radius:10px 10px 28px 10px;
+    box-shadow:0 6px 0 rgba(0,0,0,.25);
+  }
+  .screen{ position:relative; aspect-ratio:10/9; background:#9bbc0f; border:6px solid #262338; border-radius:4px; overflow:hidden }
+  .screen img{ position:absolute; inset:0; width:100%; height:100%; image-rendering:pixelated; object-fit:cover }
+  .screen .empty{ position:absolute; inset:0; display:grid; place-items:center; font:500 13px "Pixelify Sans",monospace; color:#306230 }
+  .gb figcaption{ margin-top:8px; font:500 15px/1.3 "Pixelify Sans",monospace; color:#efe6ff; text-align:center; letter-spacing:.5px }
+
+  /* ---------- progreso tipo barra de PV ---------- */
+  .total{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:10px}
+  .total b{font:700 42px/1 "Pixelify Sans",monospace; color:#1f6fd1}
+  .bar{height:14px; background:#3b2415; border:3px solid var(--frame); padding:2px}
+  .bar i{display:block; height:100%; width:0; background:repeating-linear-gradient(90deg,var(--hp1) 0 8px,#74cc48 8px 10px); transition:width 1.2s steps(20)}
+  .bar.pend i{background:repeating-linear-gradient(90deg,#d8b27a 0 8px,#c89a5c 8px 10px)}
+  .row{margin-top:16px}
+  .row .h{display:flex; justify-content:space-between; gap:10px; font-size:15px; margin-bottom:4px}
+  .row small{color:var(--dim); font-weight:600}
+
+  table{width:100%; border-collapse:collapse; margin-top:4px}
+  td{padding:7px 0; border-bottom:2px dotted rgba(122,63,28,.35); vertical-align:top}
+  tr:last-child td{border:0}
+  td:first-child{color:var(--frame); width:38%; font-weight:700}
+  code{font-size:13px; background:#f3e6c8; padding:1px 5px}
+  .btn{
+    display:inline-block; margin-bottom:16px; padding:14px 20px; color:#fff; text-decoration:none;
+    font:700 17px/1.2 "Pixelify Sans",monospace; background:linear-gradient(#f07f3a,#c9491a);
+    border:3px solid var(--frame); box-shadow:4px 4px 0 var(--frame);
+  }
+  .btn:hover{transform:translate(1px,1px); box-shadow:3px 3px 0 var(--frame)}
+  .btn:active{transform:translate(4px,4px); box-shadow:none}
+  ol{margin:6px 0 0; padding-left:22px} li{margin:4px 0}
+  .menu{list-style:none; padding:0; margin:6px 0 0}
+  .menu li{padding-left:22px; position:relative}
+  .menu li::before{content:"▶"; position:absolute; left:0; color:#d4572a; font-size:12px; top:2px}
+  footer{margin-top:40px; text-align:center; color:#5a3718; font-size:13px; font-weight:600}
+  @media (max-width:560px){ .shots{grid-template-columns:1fr} .logo h1{font-size:20px} .total b{font-size:32px} }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <img src="img/logo.png" alt="Azure Dreams" class="logo-img">
+  <p>Proyecto de traducción fan de Azure Dreams (Game Boy Color) al español por Fveralv. Progreso y descarga del parche.</p>
+</header>
+
+  <section id="capturas">
+    <h2>CAPTURAS</h2>
+    <div class="box"><span class="corner-b"></span>
+      <div class="shots">
+        <figure class="gb"><div class="screen"><div class="empty">img/captura1.png</div><img src="img/captura1.png" alt="Llegando a casa" onerror="this.remove()"></div><figcaption>Llegando a casa</figcaption></figure>
+        <figure class="gb"><div class="screen"><div class="empty">img/captura2.png</div><img src="img/captura2.png" alt="Ayudando a Nico" onerror="this.remove()"></div><figcaption>Ayudando a Nico</figcaption></figure>
+        <figure class="gb"><div class="screen"><div class="empty">img/captura3.png</div><img src="img/captura3.png" alt="Tienda de monstruos" onerror="this.remove()"></div><figcaption>Tienda de monstruos</figcaption></figure>
+        <figure class="gb"><div class="screen"><div class="empty">img/captura4.png</div><img src="img/captura4.png" alt="Piso 20" onerror="this.remove()"></div><figcaption>Piso 20</figcaption></figure>
+      </div>
+      <span class="next"></span>
+    </div>
+  </section>
+
+  <section id="progreso">
+    <h2>PROGRESO</h2>
+    <div class="box"><span class="corner-b"></span>
+      <div class="total"><b id="totPct">0 %</b><span><span id="totNum">0</span> / <span id="totAll">0</span> textos</span></div>
+      <div class="bar"><i id="totBar"></i></div>
+      <div id="areas"></div>
+      <span class="next"></span>
+    </div>
+  </section>
+
+  <section id="parche">
+    <h2>PARCHE</h2>
+    <div class="box"><span class="corner-b"></span>
+      <a class="btn" href="AzureDreams_GBC_ES.ips" download>Descargar AzureDreams_GBC_ES.ips</a>
+      <table>
+        <tr><td>Versión</td><td>Beta 1</td></tr>
+        <tr><td>Actualizado</td><td>24/09/2026</td></tr>
+        <tr><td>Tamaño</td><td>114 KB</td></tr>
+        <tr><td>Formato</td><td>IPS</td></tr>
+        <tr><td>Juego original</td><td>Azure Dreams (USA) · Game Boy Color</td></tr>
+        <tr><td>CRC32 de la ROM</td><td><code>71D52876</code></td></tr>
+        <tr><td>MD5</td><td><code>464ACBE3C82887DB897C39CDBA877237</code></td></tr>
+      </table>
+      <p class="pix" style="margin:18px 0 6px">¿CÓMO SE APLICA?</p>
+      <ol>
+        <li>Consigue tu copia de <b>Azure Dreams (USA).gbc</b> y comprueba que su CRC32 es <code>71D52876</code>.</li>
+        <li>Abre <a href="https://www.marcrobledo.com/RomPatcher.js/" target="_blank" rel="noopener">Rom Patcher JS</a> (o Flips / Lunar IPS).</li>
+        <li>Elige la ROM y el parche <code>AzureDreams_GBC_ES.ips</code> y pulsa «Aplicar parche».</li>
+      </ol>
+      <p class="dim">El parche solo contiene las diferencias con la ROM original. No incluye el juego: necesitas tu propia copia legal.</p>
+      <p class="dim">-</p>
+      <p class="dim">¿Te gusta lo que hago? Si crees que mi trabajo merece la pena, puedes apoyarme invitándome a un café. ¡Cualquier aporte me ayuda a seguir creando! ☕</p>
+      <script type="text/javascript" src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"></script>
+      <script type="text/javascript">kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'S6P527KUBF'); kofiwidget2.draw();</script>
+      <span class="next"></span>
+    </div>
+  </section>
+
+  <section id="contenido">
+    <h2>QUÉ INCLUYE</h2>
+    <div class="box"><span class="corner-b"></span>
+      <ul class="menu">
+        <li>Toda la historia y los diálogos del pueblo y la Torre, con los nombres de los personajes originales.</li>
+        <li>Mensajes de combate, objetos, trampas y estaciones de la Torre.</li>
+        <li>Nombres y descripciones de objetos, monstruos, hechizos y técnicas.</li>
+        <li>Menús de texto: ascensor, guardado, órdenes al familiar, establo, fusión e intercambio.</li>
+        <li>Letras españolas dibujadas en la fuente del juego: á é í ó ú ñ ¿ ¡ ü.</li>
+      </ul>
+      <p class="pix" style="margin:18px 0 6px">PENDIENTE</p>
+      <ul class="menu">
+        <li>Textos dibujados como gráficos: pantalla de título (New game / Continue / Exchange), menú de comandos y pantalla de nombre.</li>
+      </ul>
+      <span class="next"></span>
+    </div>
+  </section>
+
+  <footer>Proyecto de traducción fan por Fveralv. No se distribuye el juego. Azure Dreams es marca de sus respectivos propietarios.</footer>
+</main>
+
+<script>
+  const DATA = {
+    areas: [
+      { name: "Historia y diálogos",          done: 978, total: 978, text: true },
+      { name: "Objetos",                      done: 229, total: 229, text: true },
+      { name: "Monstruos",                    done: 236, total: 236, text: true },
+      { name: "Hechizos",                     done: 124, total: 124, text: true },
+      { name: "Técnicas",                     done: 134, total: 134, text: true },
+      { name: "Menús y sistema",              done: 141, total: 141, text: true },
+      { name: "Gráficos (título y menús)",    done: 0,   total: 0,   text: false }
+    ]
+  };
+  const fmt = n => n.toLocaleString("es-ES");
+  const pct = (a, b) => b ? Math.round(a * 100 / b) : 0;
+
+  const t = DATA.areas.filter(a => a.text);
+  const d = t.reduce((s, a) => s + a.done, 0), all = t.reduce((s, a) => s + a.total, 0);
+  document.getElementById("totPct").textContent = pct(d, all) + " %";
+  document.getElementById("totNum").textContent = fmt(d);
+  document.getElementById("totAll").textContent = fmt(all);
+
+  const box = document.getElementById("areas");
+  const bars = [[document.getElementById("totBar"), pct(d, all)]];
+  DATA.areas.forEach(a => {
+    const row = document.createElement("div");
+    row.className = "row";
+    const pending = !a.total;
+    const info = pending ? "Pendiente" : fmt(a.done) + " / " + fmt(a.total) + " · " + pct(a.done, a.total) + " %";
+    row.innerHTML = '<div class="h"><span>' + a.name + '</span><small>' + info + '</small></div>'
+                  + '<div class="bar' + (pending ? ' pend' : '') + '"><i></i></div>';
+    box.appendChild(row);
+    bars.push([row.querySelector("i"), pending ? 0 : pct(a.done, a.total)]);
+  });
+  requestAnimationFrame(() => setTimeout(() => bars.forEach(([el, v]) => el.style.width = v + "%"), 80));
+</script>
+</body>
+</html>
